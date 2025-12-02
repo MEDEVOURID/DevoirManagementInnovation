@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDCLOTHES - Vêtements Traditionnels Marocains</title>
+    <!-- Chargement de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Configuration de la police Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Arrière-plan avec animation subtile */
+            background: linear-gradient(-45deg, #f5e3c7, #eedfbb, #d8bc85, #b88d44);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        /* Animation de dégradé */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Style de la carte produit pour l'ombre et la transition */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Style pour le bouton "Ajouter au Panier" */
+        .btn-primary {
+            background-color: #8D5B32; /* Brun foncé riche */
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #6C4426;
+        }
+    </style>
+    <script>
+        // Fonction pour gérer l'ajout au panier (simulation)
+        function addToCart(productName, price) {
+            // Dans une vraie application, cela mettrait à jour un état ou une base de données.
+            // Ici, nous utilisons une alerte stylisée (simulation d'un toast/message box).
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            messageText.textContent = `${productName} ( ${price} ) a été ajouté au panier !`;
+            
+            messageBox.classList.remove('hidden');
+            messageBox.classList.add('flex');
+
+            // Masquer le message après 3 secondes
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+                messageBox.classList.remove('flex');
+            }, 3000);
+        }
+
+        // Liste des produits mise à jour avec les prix en Dirhams (DH) et de nouvelles images
+        const products = [
+            { 
+                id: 1, 
+                name: "Caftan Royal", 
+                description: "Élégance intemporelle avec broderie Fassi dorée.", 
+                price: "4800 DH", 
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Moroccan+royal+caftan+with+gold+embroidery%2C+luxurious%2C+traditional+clothing%2C+high+fashion%2C+studio+lighting%2C+intricate+details%2C+golden+thread%2C+rich+fabric%2C+photorealistic" 
+            },
+            { 
+                id: 2, 
+                name: "Djellaba de Soie", 
+                description: "Confort et tradition, parfait pour les soirées.", 
+                price: "1950 DH", 
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Elegant+Moroccan+silk+djellaba%2C+flowing+fabric%2C+comfortable+yet+stylish%2C+evening+wear%2C+subtle+embroidery%2C+soft+lighting%2C+photorealistic" 
+            },
+            { 
+                id: 3, 
+                name: "Babouches en Cuir", 
+                description: "Artisanat authentique, 100% cuir souple.", 
+                price: "600 DH", 
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Authentic+Moroccan+leather+babouches%2C+handmade%2C+soft+leather%2C+traditional+footwear%2C+artisanal+craftsmanship%2C+close-up+shot%2C+natural+light%2C+photorealistic" 
+            },
+            { 
+                id: 4, 
+                name: "Jabador Brodé", 
+                description: "Ensemble traditionnel pour homme, tissu de qualité.", 
+                price: "3150 DH", 
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Traditional+Moroccan+jabador+for+men%2C+embroidered%2C+high+quality+fabric%2C+formal+wear%2C+cultural+attire%2C+studio+lighting%2C+detailed+stitching%2C+photorealistic" 
+            },
+            {
+                id: 5,
+                name: "Tunique Orientale",
+                description: "Tunique légère avec motifs géométriques, idéale pour l'été.",
+                price: "950 DH",
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Lightweight+oriental+tunic+with+geometric+patterns%2C+summer+wear%2C+casual+moroccan+fashion%2C+bright+colors%2C+airy+fabric%2C+outdoor+setting%2C+photorealistic"
+            },
+            {
+                id: 6,
+                name: "Sarouel Confort",
+                description: "Pantalon sarouel moderne et confortable, parfait pour la détente.",
+                price: "700 DH",
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Modern+and+comfortable+sarouel+pants%2C+relaxed+fit%2C+casual+moroccan+style%2C+earthy+tones%2C+soft+fabric%2C+leisure+wear%2C+photorealistic"
+            },
+            {
+                id: 7,
+                name: "Châle en Soie Sauvage",
+                description: "Châle élégant en soie sauvage, motifs berbères authentiques.",
+                price: "1200 DH",
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Elegant+wild+silk+shawl%2C+authentic+Berber+patterns%2C+luxurious+accessory%2C+rich+textures%2C+deep+colors%2C+close-up+on+fabric%2C+photorealistic"
+            },
+            {
+                id: 8,
+                name: "Robe de Mariée Traditionnelle",
+                description: "Robe magnifique pour les mariages, broderies détaillées et perles.",
+                price: "15000 DH",
+                imageUrl: "https://generative-ai.whattheprompt.ai/api/image?prompt=Magnificent+traditional+Moroccan+wedding+dress%2C+detailed+embroidery+and+beads%2C+bridal+couture%2C+sumptuous+fabric%2C+royal+blue+and+gold%2C+studio+lighting%2C+photorealistic"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const productsContainer = document.getElementById('products-container');
+            
+            // Générer le HTML des produits
+            products.forEach(product => {
+                const html = `
+                    <div class="product-card bg-white p-6 rounded-xl overflow-hidden flex flex-col items-center text-center">
+                        <!-- Image du produit (URL réelle) --><img src="${product.imageUrl}" alt="Image de ${product.name}" class="w-full h-48 object-cover rounded-lg mb-4 border border-gray-100">
+                        
+                        <!-- Nom et Description --><h3 class="text-xl font-bold text-gray-800 mb-2">${product.name}</h3>
+                        <p class="text-sm text-gray-500 mb-4 flex-grow">${product.description}</p>
+                        
+                        <!-- Prix et Bouton --><div class="mt-auto w-full">
+                            <p class="text-2xl font-extrabold text-[#B88D44] mb-4">${product.price}</p>
+                            <button 
+                                onclick="addToCart('${product.name}', '${product.price}')"
+                                class="btn-primary w-full shadow-lg hover:shadow-xl transition-all duration-300">
+                                Ajouter au Panier
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsContainer.insertAdjacentHTML('beforeend', html);
+            });
+        });
+    </script>
+</head>
+<body class="min-h-screen text-gray-800">
+
+    <!-- Message Box (Alert/Toast) --><div id="message-box" class="fixed top-5 right-5 z-50 p-4 bg-green-600 text-white rounded-lg shadow-2xl transition-all duration-500 hidden items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="message-text" class="font-medium"></span>
+    </div>
+    
+    <!-- En-tête (Header) --><header class="bg-white/90 sticky top-0 backdrop-blur-sm shadow-md z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo / Titre --><h1 class="text-3xl font-extrabold text-[#B88D44] tracking-wider">
+                MEDCLOTHES
+            </h1>
+            
+            <!-- Navigation --><nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+                <a href="#accueil" class="hover:text-[#B88D44] transition-colors duration-200">Accueil</a>
+                <a href="#produits" class="hover:text-[#B88D44] transition-colors duration-200">Produits</a>
+                <a href="#contact" class="hover:text-[#B88D44] transition-colors duration-200">Contact</a>
+            </nav>
+
+            <!-- Bouton Panier (simple icône) --><button class="text-gray-700 hover:text-[#B88D44] transition-colors duration-200 p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Section Principale (Héros) --><main class="container mx-auto px-4 py-12">
+        <section id="accueil" class="text-center mb-16 p-8 bg-white/70 rounded-2xl backdrop-blur-sm">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-[#8D5B32] mb-4">
+                L'Élégance du Maroc à Portée de Main
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez notre collection exclusive de Caftans, Djellabas et Babouches, confectionnés à la main par des artisans marocains.
+            </p>
+            <a href="#produits" class="inline-block mt-8 btn-primary hover:scale-[1.03] transform duration-300">
+                Explorer la Collection
+            </a>
+        </section>
+
+        <!-- Section des Produits --><section id="produits" class="py-10">
+            <h2 class="text-3xl font-bold text-center text-[#B88D44] mb-12 border-b-2 border-gray-300 pb-3 max-w-xl mx-auto">
+                Nos Meilleurs Vêtements Traditionnels
+            </h2>
+
+            <!-- Conteneur des Cartes Produits (généré par JS) --><div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Les produits seront insérés ici par le script JavaScript --></div>
+        </section>
+
+        <!-- Section Contact/Information --><section id="contact" class="mt-16 p-8 bg-white/70 rounded-2xl shadow-xl">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+                Informations et Contact
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700">
+                <div>
+                    <h3 class="font-semibold text-lg mb-2 text-[#8D5B32]">Artisanat Garanti</h3>
+                    <p class="text-sm">Chaque pièce est unique, fabriquée avec des matériaux de haute qualité et selon des techniques ancestrales.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2 text-[#8D5B32]">Livraison Mondiale</h3>
+                    <p class="text-sm">Nous expédions nos produits partout dans le monde. Livraison gratuite à partir de **2200 DH** d'achat.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2 text-[#8D5B32]">Nous Contacter</h3>
+                    <p class="text-sm">Email : contact@medclothes.ma</p>
+                    <p class="text-sm">Téléphone : +212 522 XX XX XX</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de Page (Footer) --><footer class="bg-[#8D5B32] mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-white text-sm">
+            <!-- Mise à jour pour inclure la marque et le créateur -->&copy; 2025 MEDCLOTHES. Tous droits réservés. | Marque: MEDCLOTHES par Mohamed OURID.
+        </div>
+    </footer>
+
+</body>
+</html>
